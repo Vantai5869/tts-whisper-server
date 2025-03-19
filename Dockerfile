@@ -1,14 +1,11 @@
-FROM python:3.9-slim
+FROM python:3.9-alpine
 
-# Cài FFmpeg
-RUN apt-get update && apt-get install -y ffmpeg
+# Cài FFmpeg và phụ thuộc cần thiết
+RUN apk add --no-cache ffmpeg
 
-# Sao chép code
 WORKDIR /app
 COPY . /app
 
-# Cài phụ thuộc Python
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Chạy server
-CMD ["python", "main.py"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "$PORT"]
