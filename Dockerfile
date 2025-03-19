@@ -10,5 +10,5 @@ COPY . /app
 # Cài phụ thuộc Python
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Chạy server
-CMD ["python", "main.py"]
+# Chạy server với uvicorn, dùng $PORT từ Render
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "$PORT"]
